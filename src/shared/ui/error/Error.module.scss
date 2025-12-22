@@ -1,0 +1,14 @@
+@use '@shared/styles/variables.scss' as vars;
+@use '@shared/styles/mixins.scss' as mixins;
+
+.error {
+  @include mixins.text-style(18px !important, 18px !important, 600 !important, vars.$red !important);
+  margin: 0 auto !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  background-color: vars.$white-smoke !important;
+  border: 1px solid vars.$red !important;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  justify-content: center !important;
+}

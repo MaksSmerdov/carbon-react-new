@@ -1,0 +1,17 @@
+.homeTabs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.homeTabs__tabs {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.homeTabs__subTabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 4px 0;
+}
+
