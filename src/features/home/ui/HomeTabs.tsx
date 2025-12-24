@@ -9,14 +9,11 @@ type HomeTabsProps = {
   subTab: string;
   onMainChange: (value: string, nextSub: string) => void;
   onSubChange: (value: string) => void;
+  children?: React.ReactNode;
 };
 
-export const HomeTabs = ({ mainTab, subTab, onMainChange, onSubChange }: HomeTabsProps) => {
+export const HomeTabs = ({ mainTab, subTab, onMainChange, onSubChange, children }: HomeTabsProps) => {
   const activeMain = useMemo<MainTab | undefined>(() => TABS.find((tab) => tab.value === mainTab), [mainTab]);
-
-  const activeSubContent = useMemo(() => {
-    return activeMain?.subTabs.find((t) => t.value === subTab)?.content ?? null;
-  }, [activeMain, subTab]);
 
   const handleMainChange = (_: SyntheticEvent, value: string) => {
     const nextMain = TABS.find((tab) => tab.value === value);
@@ -51,7 +48,7 @@ export const HomeTabs = ({ mainTab, subTab, onMainChange, onSubChange }: HomeTab
         </Box>
       ) : null}
 
-      <Box className={styles['homeTabs__content']}>{activeSubContent}</Box>
+      <Box className={styles['homeTabs__content']}>{children}</Box>
     </>
   );
 };

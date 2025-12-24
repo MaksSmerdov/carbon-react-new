@@ -46,16 +46,15 @@ body {
 }
 
 .alarm {
-  animation: blink 1s infinite;
+  animation: blink-threshold 1s infinite;
 }
 
-@keyframes blink {
-  0%,
-  100% {
+@keyframes blink-threshold {
+  0%, 100% {
     color: vars.$hulk;
   }
   50% {
-    color: red;
+    color: vars.$red;
   }
 }
 

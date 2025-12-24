@@ -2,13 +2,10 @@ import type { ReactNode } from 'react';
 import SpeedIcon from '@mui/icons-material/Speed';
 import SchemaOutlinedIcon from '@mui/icons-material/SchemaOutlined';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Typography } from '@mui/material';
-import { CurrentParams } from '@features/carbonization/sections/current-params/CurrentParams';
 
 export type SubTab = {
   label: string;
   value: string;
-  content: ReactNode;
   icon?: ReactNode;
 };
 
@@ -19,7 +16,7 @@ export type MainTab = {
 };
 
 // Шаблон подтабов, который будет использоваться для всех ПК
-const SUB_TABS_TEMPLATE: Omit<SubTab, 'content'>[] = [
+export const SUB_TABS_TEMPLATE: SubTab[] = [
   {
     label: 'Текущие параметры',
     value: 'current',
@@ -37,20 +34,6 @@ const SUB_TABS_TEMPLATE: Omit<SubTab, 'content'>[] = [
   },
 ];
 
-// Функция для получения контента подтаба на основе его значения
-const getSubTabContent = (subTabValue: string): ReactNode => {
-  switch (subTabValue) {
-    case 'current':
-      return <CurrentParams />;
-    case 'mnemo':
-      return <Typography>Мнемосхема</Typography>;
-    case 'charts':
-      return <Typography>Графики</Typography>;
-    default:
-      return <Typography>Страница</Typography>;
-  }
-};
-
 // Конфигурация ПК
 const CARBONIZATION_UNITS = [
   { label: 'ПК №1', value: 'carbonization-1' },
@@ -62,11 +45,9 @@ const CARBONIZATION_UNITS = [
 export const TABS: MainTab[] = CARBONIZATION_UNITS.map((unit) => ({
   label: unit.label,
   value: unit.value,
-  subTabs: SUB_TABS_TEMPLATE.map((subTab) => ({
-    ...subTab,
-    content: getSubTabContent(subTab.value),
-  })),
+  subTabs: SUB_TABS_TEMPLATE,
 }));
 
 export const DEFAULT_MAIN = TABS[0]?.value ?? '';
 export const DEFAULT_SUB = TABS[0]?.subTabs[0]?.value ?? '';
+

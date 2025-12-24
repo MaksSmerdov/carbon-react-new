@@ -16,4 +16,5 @@ export interface Carbonization {
 
 export interface Notis {
   data: SensorData;
+  status?: 'idle' | 'working';
 }

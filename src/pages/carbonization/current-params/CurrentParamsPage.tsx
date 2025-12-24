@@ -1,4 +1,4 @@
-import { CurrentParams } from '@features/carbonization/sections/current-params/CurrentParams';
+import { CurrentParams } from '@features/carbonization';
 import styles from './CurrentParamsPage.module.scss';
 
 export const CurrentParamsPage = () => {

@@ -1,8 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Typography } from '@mui/material';
 import { DEFAULT_MAIN, DEFAULT_SUB, TABS } from '@features/home/model/tabs';
 import { HomeTabs } from '@features/home/ui/HomeTabs';
-import styles from './HomePage.module.scss'
+import { CurrentParams } from '@features/carbonization';
+import styles from './HomePage.module.scss';
+
+const renderSubTabContent = (subTabValue: string) => {
+  switch (subTabValue) {
+    case 'current':
+      return <CurrentParams />;
+    case 'mnemo':
+      return <Typography>Мнемосхема</Typography>;
+    case 'charts':
+      return <Typography>Графики</Typography>;
+    default:
+      return <Typography>Страница</Typography>;
+  }
+};
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -32,13 +47,17 @@ export const HomePage = () => {
     navigate(`/${main}/${nextSub}`);
   };
 
+  const content = useMemo(() => renderSubTabContent(sub), [sub]);
+
   if (!mainExists || !subExists) {
     return null;
   }
 
   return (
     <div className={`${styles['homePage']}`}>
-      <HomeTabs mainTab={main} subTab={sub} onMainChange={handleMainChange} onSubChange={handleSubChange} />
+      <HomeTabs mainTab={main} subTab={sub} onMainChange={handleMainChange} onSubChange={handleSubChange}>
+        {content}
+      </HomeTabs>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import type { SensorData } from '@shared/types/types';
+import { getAlarmClassName } from '@shared/lib/thresholds';
 import styles from './Table.module.scss';
 
 export interface TableProps {
@@ -6,12 +7,14 @@ export interface TableProps {
   data?: SensorData;
   unit?: string;
   recommended?: boolean;
+  exceededKeys?: Record<string, boolean>;
+  recommendedValues?: Record<string, string>;
 }
 
-export const Table = ({ title, data, unit, recommended }: TableProps) => {
+export const Table = ({ title, data, unit, recommended, exceededKeys, recommendedValues }: TableProps) => {
   return (
     <div>
-      {title ? <div className={styles['table__title']}>{title}</div> : null}
+      {title && <div className={styles['table__title']}>{title}</div>}
       <table className={styles['table']}>
         <thead className={styles['table__thead']}>
           <tr className="table__tr">
@@ -21,14 +24,15 @@ export const Table = ({ title, data, unit, recommended }: TableProps) => {
           </tr>
         </thead>
         <tbody className={styles['table__body']}>
-          {Object.entries(data || {}).map(([key, value]) => {
-            return (
-              <tr key={key} className="table__tr">
-                <td className="table__td table__left">{key}</td>
-                <td className={`table__td table__value`}>{String(value)}</td>
-              </tr>
-            );
-          })}
+          {Object.entries(data || {}).map(([key, value]) => (
+            <tr key={key} className="table__tr">
+              <td className="table__td table__left">{key}</td>
+              <td className={`table__td table__value ${getAlarmClassName(exceededKeys?.[key] ?? false)}`}>
+                {String(value)}
+              </td>
+              {recommended && <td className="table__td">{recommendedValues?.[key] || '-'}</td>}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
