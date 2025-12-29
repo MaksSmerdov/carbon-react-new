@@ -10,6 +10,7 @@ import { ThresholdProvider } from '@shared/lib/thresholds';
 import { getWorkMode } from '../../model/workMode';
 import { getThresholdsWithWorkMode } from '../../model/getDynamicThresholds';
 import { getApiEndpoints } from './constants/apiEndpoints';
+import { parseRouteParams } from '@features/home/model/tabs';
 import { getNotisStatus } from './utils/getNotisStatus';
 import { useCarbonizationData } from './hooks/useCarbonizationData';
 import { useThresholds } from './hooks/useThresholds';
@@ -17,10 +18,10 @@ import { useRecommendedValues } from './hooks/useRecommendedValues';
 import { TablesList } from './components/TablesList';
 
 export const CurrentParams = () => {
-  const params = useParams<{ main?: string }>();
-  const mainTab = params.main ?? 'carbonization-1';
+  const params = useParams<{ type?: string; id?: string }>();
+  const { id } = parseRouteParams(params.type, params.id);
 
-  const { vr, notis: notisEndpoint } = getApiEndpoints(mainTab);
+  const { vr, notis: notisEndpoint } = getApiEndpoints(id);
   const { data, loading, error } = useData<Carbonization>(createApiUrl(vr));
   const { data: notis } = useData<Notis>(createApiUrl(notisEndpoint));
 
@@ -49,7 +50,7 @@ export const CurrentParams = () => {
   });
 
   const notisStatus = useMemo(() => getNotisStatus(notis ?? undefined), [notis]);
-  const headerTitle = mainTab === 'carbonization-1' ? 'Печь карбонизации №1' : 'Печь карбонизации №2';
+  const headerTitle = `Печь карбонизации №${id}`;
 
   if (loading) return <Loader />;
   if (error) return <Error />;

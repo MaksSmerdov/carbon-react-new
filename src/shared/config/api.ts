@@ -6,7 +6,7 @@ const getBaseUrl = (): string => {
     return 'http://localhost:3002';
   }
 
-  return 'http://169.254.0.156:3002';
+  return 'http://localhost:3002';
 };
 
 export const API_BASE_URL = getBaseUrl();
@@ -23,5 +23,8 @@ export const API_ENDPOINTS = {
   VR2_DATA: 'api/vr2-data',
   NOTIS1_DATA: 'api/notis1-data',
   NOTIS2_DATA: 'api/notis2-data',
+  MPA1_DATA: 'api/mpa1-data',
+  MPA2_DATA: 'api/mpa2-data',
+  MPA3_DATA: 'api/mpa3-data',
 
 } as const;
